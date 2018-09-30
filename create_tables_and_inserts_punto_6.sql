@@ -7,10 +7,10 @@ CREATE TABLE countries
 );
 
 CREATE SEQUENCE countries_seq
-START WITH 0
+START WITH 1
 INCREMENT BY 1
 NOCYCLE;
-
+ 
 CREATE TABLE states
 ( id INT NOT NULL,   
   country_id INT NOT NULL,
