@@ -24,3 +24,50 @@ DEFAULT tablespace uber
 QUOTA UNLIMITED ON uber;	
 
 GRANT CONNECT, DBA TO uber_dba;
+
+/*4. Create 2 profiles. (0.1)*/
+
+/*a. Profile 1: "clerk" password life 40 days, one session per user, 10 minutes idle, 4 failed login
+attempts*/
+CREATE PROFILE clerk LIMIT
+PASSWORD_LIFE_TIME 40
+SESSIONS_PER_USER 1
+IDLE_TIME 10
+FAILED_LOGIN_ATTEMPTS 4;
+
+/*b. Profile 3: "development " password life 100 days, two session per user, 30 minutes idle, no
+failed login attempts*/
+CREATE PROFILE development  LIMIT
+PASSWORD_LIFE_TIME 100
+SESSIONS_PER_USER 2
+IDLE_TIME 30
+FAILED_LOGIN_ATTEMPTS UNLIMITED;
+
+
+/* 5 ) Create 4 users, assign them the tablespace " uber ": */
+
+/* a. 2 of them should have the clerk profile and the remaining the development profile, all the users should be allow to connect to the database. */
+CREATE USER USER1
+IDENTIFIED BY user1
+DEFAULT tablespace uber
+PROFILE CLERK;
+
+CREATE USER USER2
+IDENTIFIED BY user2
+DEFAULT tablespace uber
+PROFILE CLERK;
+
+CREATE USER USER3
+IDENTIFIED BY user3
+DEFAULT tablespace uber
+PROFILE DEVELOPMENT;
+
+CREATE USER USER4
+IDENTIFIED BY user4
+DEFAULT tablespace uber
+PROFILE DEVELOPMENT;
+
+GRANT CONNECT TO USER1, USER2, USER3, USER4;
+
+/* b. Lock one user associate with clerk profile */ 
+ALTER USER USER1 ACCOUNT LOCK;
