@@ -29,7 +29,7 @@ GRANT CONNECT, DBA TO uber_dba;
 
 /*a. Profile 1: "clerk" password life 40 days, one session per user, 10 minutes idle, 4 failed login
 attempts*/
-CREATE PROFILE clerk LIMIT
+CREATE PROFILE clerk LIMIT  -- Usuario Empleado
 PASSWORD_LIFE_TIME 40
 SESSIONS_PER_USER 1
 IDLE_TIME 10
@@ -37,7 +37,7 @@ FAILED_LOGIN_ATTEMPTS 4;
 
 /*b. Profile 3: "development " password life 100 days, two session per user, 30 minutes idle, no
 failed login attempts*/
-CREATE PROFILE development  LIMIT
+CREATE PROFILE development  LIMIT -- Usuario Desarrollo
 PASSWORD_LIFE_TIME 100
 SESSIONS_PER_USER 2
 IDLE_TIME 30
@@ -70,4 +70,4 @@ PROFILE DEVELOPMENT;
 GRANT CONNECT TO USER1, USER2, USER3, USER4;
 
 /* b. Lock one user associate with clerk profile */ 
-ALTER USER USER1 ACCOUNT LOCK;
+ALTER USER USER1 ACCOUNT LOCK; -- Usuario Bloqueado
