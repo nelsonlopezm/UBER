@@ -71,3 +71,4 @@ GRANT CONNECT TO USER1, USER2, USER3, USER4;
 
 /* b. Lock one user associate with clerk profile */ 
 ALTER USER USER1 ACCOUNT LOCK; -- Usuario Bloqueado
+ALTER USER USER1 ACCOUNT UNLOCK; -- Usuario Bloqueado
