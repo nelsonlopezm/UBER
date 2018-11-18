@@ -8,16 +8,12 @@ CREATE OR REPLACE VIEW medios_pago_clientes AS
         upm.business_account      empresarial,
         upm.company_name          nombre_empresa
     FROM
-        users u,
-        user_payment_methods upm,
-        payment_methods_types pmt
-    WHERE
-        upm.user_id = u.id
-        AND upm.payment_method_type = pmt.id
-    ORDER BY 1;
+        users u INNER JOIN user_payment_methods upm ON upm.user_id = u.id
+        INNER JOIN payment_methods_types pmt ON upm.payment_method_type = pmt.id        
+    ORDER BY u.id;
 
    
-CREATE OR REPLACE VIEW VIAJES_CLIENTES AS
+CREATE OR REPLACE VIEW viajes_clientes AS
 SELECT
     t.pickup           fecha_viaje,
     (SELECT upper( (u.name || ' ' || u.last_name) ) nombre_cliente FROM users WHERE id = dv.user_id) nombre_conductor,
@@ -58,6 +54,13 @@ FUNCTION time_value (
     p_minutes   NUMBER,
     p_city       cities.name%TYPE
 ) RETURN NUMBER;
+
+
+-- Procedimiento que permite calcular el valor de un viaje, el cual recibe como parametro el id del viaje
+-- Assigment_2.calcular_tarifa (p_id_viaje);
+PROCEDURE calcular_tarifa (
+    p_id_viaje IN INT
+); 
 
 END Assigment_2;
 /
@@ -106,6 +109,64 @@ BEGIN
     
     RETURN value_distance_city;
 END time_value;
+
+
+-- Procedimiento que permite calcular el valor de un viaje, el cual recibe como parametro el id del viaje
+-- EXECUTE Assigment_2.calcular_tarifa (p_id_viaje);
+
+PROCEDURE calcular_tarifa (
+    p_id_viaje IN INT
+) AS
+
+    estado_viaje      trips.trip_status%TYPE := NULL;
+    ciudad_viaje      cities.name%TYPE := NULL;
+    tarifa_base       cities.value_base_rate%TYPE := 0;
+    tiempo_viaje      trips.trip_time%TYPE := 0;
+    distancia         trips.trip_distance%TYPE := 0;
+    detalles_viaje    NUMBER := 0;
+    valor_tiempo      NUMBER := 0;
+    valor_distancia   NUMBER := 0;
+    valor_tarifa      NUMBER := 0;
+BEGIN
+    SELECT DISTINCT
+        t.trip_status,
+        c.value_base_rate,
+        t.trip_time,
+        t.trip_distance,
+        SUM(tc.concept_value) OVER(PARTITION BY tc.trip_id),
+        c.name
+    INTO
+        estado_viaje,
+        tarifa_base,
+        tiempo_viaje,
+        distancia,
+        detalles_viaje,
+        ciudad_viaje
+    FROM
+        trips t
+        INNER JOIN cities c ON c.id = t.city_id
+        INNER JOIN trip_concepts tc ON tc.trip_id = t.id
+    WHERE
+        t.id = p_id_viaje;
+
+    IF ( upper(estado_viaje) = upper('FINISHED') ) THEN -- Si el estafo de viaje es FINISHED procede a actualizar el valor de la tarifa
+        valor_tarifa := 0;
+        valor_tiempo := assigment_2.time_value(tiempo_viaje,ciudad_viaje);
+        valor_distancia := assigment_2.distance_value(distancia,ciudad_viaje);
+        valor_tarifa := tarifa_base + valor_tiempo + valor_distancia + detalles_viaje;
+        UPDATE trips t
+        SET
+            t.trip_fare = valor_tarifa
+        WHERE
+            t.id = p_id_viaje;
+        COMMIT;
+        dbms_output.put_line('Se actualiza la tarifa del viaje ' || p_id_viaje || 'por un valor de $' || valor_tarifa || ' correctamente');
+
+    ELSE -- De otro modo si el estado es ACTIVE o CANCELED simplemente no actualiza dicho valor
+        dbms_output.put_line('No es posible actualizar la tarifa del viaje');
+    END IF;
+    
+END;
 
 END Assigment_2;
 /

@@ -160,15 +160,19 @@ CREATE TABLE trips
   pickup DATE NOT NULL, 
   user_id INT NOT NULL,
   driver_id INT NOT NULL,
+  city_id INT NOT NULL,  
   origin_address VARCHAR2(255 CHAR) NOT NULL,
   destination_address VARCHAR2(255 CHAR) NOT NULL,
   payment_method INT NOT NULL,
   trip_fare NUMBER(16,6) DEFAULT 0 NOT NULL,  
   trip_status VARCHAR2(20 CHAR) DEFAULT 'ACTVE' NOT NULL, -- ACTIVE, FINISHED, CANCELED  
   dinamic_fare VARCHAR2(1 CHAR) DEFAULT 'N' NOT NULL,
+  trip_time NUMBER(16,6) DEFAULT 0 NOT NULL, 
+  trip_distance NUMBER(16,6) DEFAULT 0 NOT NULL, 
   CONSTRAINT trips_pk PRIMARY KEY (id),
   CONSTRAINT fk_tr_user_id FOREIGN KEY (user_id) REFERENCES users(id),
   CONSTRAINT fk_tr_driver_id FOREIGN KEY (driver_id) REFERENCES driver_vehichles(id),
+  CONSTRAINT fk_tr_city_id FOREIGN KEY (city_id) REFERENCES cities(id),
   CONSTRAINT fk_tr_payment_method FOREIGN KEY (payment_method) REFERENCES user_payment_methods(id)
 );
 
@@ -183,9 +187,7 @@ CREATE TABLE trip_concepts
 ( id INT NOT NULL,   
   trip_id INT NOT NULL,
   concept_name VARCHAR2(255 CHAR) NOT NULL,
-  concept_value NUMBER(16,6),
-  type_concept_use VARCHAR2(255 CHAR) NOT NULL,     -- INCEMENTO, DECREMENTO   
-  type_concept_value VARCHAR2(255 CHAR) NOT NULL,   -- PORCENTAJE, VALOR  
+  concept_value NUMBER(16,6),  
   concept_description VARCHAR2(400 CHAR),
   CONSTRAINT trip_concepts_pk PRIMARY KEY (id),
   CONSTRAINT fk_tc_trip_id FOREIGN KEY (trip_id) REFERENCES trips(id)   
@@ -3260,6 +3262,7 @@ UPDATE cities SET value_per_kilometer =	768.526044	, value_per_minute =	182.5715
 COMMIT; 
 
 -- ACTUALIZAR LAS CIUDADES DE LOS CLIENTES
+UPDATE users SET location = 3 WHERE user_type = 'CUSTOMER'; COMMIT;
 UPDATE users SET location = 1 WHERE ROWNUM <= 70 AND user_type = 'CUSTOMER'; COMMIT;
 UPDATE users SET location = 149 WHERE ROWNUM <= 70 AND location NOT IN(1) AND user_type = 'CUSTOMER'; COMMIT;
 UPDATE users SET location = 1004 WHERE ROWNUM <= 70 AND location NOT IN(1,149) AND user_type = 'CUSTOMER'; COMMIT;
@@ -3270,6 +3273,7 @@ UPDATE users SET location = 319 WHERE ROWNUM <= 70 AND location NOT IN(1,149, 10
 UPDATE users SET location = 19 WHERE ROWNUM <= 70 AND location NOT IN(1,149, 1004, 150, 830, 126, 319) AND user_type = 'CUSTOMER'; COMMIT;
 
 -- ACTUALIZAR LAS CIUDADES DE LOS CONDUCTORES
+UPDATE users SET location = 2 WHERE user_type = 'DRIVER'; COMMIT;
 UPDATE users SET location = 1 WHERE ROWNUM <= 14 AND user_type = 'DRIVER'; COMMIT;
 UPDATE users SET location = 149 WHERE ROWNUM <= 14 AND location NOT IN(1) AND user_type = 'DRIVER'; COMMIT;
 UPDATE users SET location = 1004 WHERE ROWNUM <= 14 AND location NOT IN(1,149) AND user_type = 'DRIVER'; COMMIT;
@@ -3278,3 +3282,13 @@ UPDATE users SET location = 830 WHERE ROWNUM <= 14 AND location NOT IN(1,149, 10
 UPDATE users SET location = 126 WHERE ROWNUM <= 14 AND location NOT IN(1,149, 1004, 150, 830) AND user_type = 'DRIVER'; COMMIT;
 UPDATE users SET location = 319 WHERE ROWNUM <= 14 AND location NOT IN(1,149, 1004, 150, 830, 126) AND user_type = 'DRIVER'; COMMIT;
 UPDATE users SET location = 19 WHERE ROWNUM <= 14 AND location NOT IN(1,149, 1004, 150, 830, 126, 319) AND user_type = 'DRIVER'; COMMIT;
+
+
+-- INSERTAR VIAJES Y CONCEPTOS
+INSERT INTO trips (id, pickup, user_id, driver_id, city_id, origin_address, destination_address, payment_method, trip_fare, trip_status, dinamic_fare, trip_time, trip_distance) 
+VALUES (TRIPS_SEQ.nextval, sysdate, 1, 20, 1, 'CALLE 50', 'CARRERA 42', 1, 0, 'FINISHED', 'N', 8.50, 2.66); COMMIT;
+
+INSERT INTO trip_concepts (id, trip_id, concept_name, concept_value, concept_description) 
+VALUES (TRIP_CONCEPTS_SEQ.nextval, 1, 'RECARGO NOCTURNO', 5000, NULL); COMMIT;
+INSERT INTO trip_concepts (id, trip_id, concept_name, concept_value, concept_description) 
+VALUES (TRIP_CONCEPTS_SEQ.nextval, 1, 'PROPINA', 3000, NULL); COMMIT;
