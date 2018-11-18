@@ -24,16 +24,10 @@ SELECT
     v.service          tipo_servicio,
     c.name             ciudad_viaje
 FROM
-    trips t,
-    users u,
-    cities c,
-    driver_vehichles dv,
-    vehichles v    
-WHERE
-    t.user_id = u.id
-    AND t.driver_id = dv.id
-    AND dv.vehichle_id = v.id
-    AND u.location = c.id;
+    trips t INNER JOIN users u ON t.user_id = u.id
+    INNER JOIN cities c ON AND t.city_id = c.id;
+    INNER JOIN driver_vehichles dv ON t.driver_id = dv.id
+    INNER JOIN vehichles v ON dv.vehichle_id = v.id;
 
 	
 CREATE OR REPLACE PACKAGE Assigment_2 AS

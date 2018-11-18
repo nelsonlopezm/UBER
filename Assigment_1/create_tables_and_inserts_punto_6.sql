@@ -3303,3 +3303,64 @@ INSERT INTO trip_concepts (id, trip_id, concept_name, concept_value, concept_des
 VALUES (TRIP_CONCEPTS_SEQ.nextval, 2, 'PROPINA', 5000, NULL); COMMIT;
 INSERT INTO trip_concepts (id, trip_id, concept_name, concept_value, concept_description) 
 VALUES (TRIP_CONCEPTS_SEQ.nextval, 2, 'PEAJE', 4000, NULL); COMMIT;
+
+
+-- VIAJE 3
+INSERT INTO trips (id, pickup, user_id, driver_id, city_id, origin_address, destination_address, payment_method, trip_fare, trip_status, dinamic_fare, trip_time, trip_distance) 
+VALUES (TRIPS_SEQ.nextval, sysdate -15, 420, 80, 150, 'TRANSVERSAL 10', 'CARRERA 8', 420, 0, 'FINISHED', 'N', 25.3, 12.36); COMMIT;
+
+INSERT INTO trip_concepts (id, trip_id, concept_name, concept_value, concept_description) 
+VALUES (TRIP_CONCEPTS_SEQ.nextval, 3, 'RECARGO MASCOTAS', 7000, NULL); COMMIT;
+INSERT INTO trip_concepts (id, trip_id, concept_name, concept_value, concept_description) 
+VALUES (TRIP_CONCEPTS_SEQ.nextval, 3, 'PROPINA', 2000, NULL); COMMIT;
+-- VIAJE 4
+INSERT INTO trips (id, pickup, user_id, driver_id, city_id, origin_address, destination_address, payment_method, trip_fare, trip_status, dinamic_fare, trip_time, trip_distance) 
+VALUES (TRIPS_SEQ.nextval, sysdate, 250, 35, 830, 'CALLE 10', 'CARRERA 35', 250, 0, 'CANCELED', 'N', 0, 0); COMMIT;
+-- VIAJE 5
+INSERT INTO trips (id, pickup, user_id, driver_id, city_id, origin_address, destination_address, payment_method, trip_fare, trip_status, dinamic_fare, trip_time, trip_distance) 
+VALUES (TRIPS_SEQ.nextval, sysdate -12, 130, 38, 1, 'CARRERA 46', 'CALLE 10', 130, 0, 'FINISHED', 'N', 30.4, 9.2); COMMIT;
+
+INSERT INTO trip_concepts (id, trip_id, concept_name, concept_value, concept_description) 
+VALUES (TRIP_CONCEPTS_SEQ.nextval, 5, 'RECARGO EXCESO EQUIPAJE', 10000, NULL); COMMIT;
+INSERT INTO trip_concepts (id, trip_id, concept_name, concept_value, concept_description) 
+VALUES (TRIP_CONCEPTS_SEQ.nextval, 5, 'PROPINA', 5000, NULL); COMMIT;
+-- VIAJE 6
+INSERT INTO trips (id, pickup, user_id, driver_id, city_id, origin_address, destination_address, payment_method, trip_fare, trip_status, dinamic_fare, trip_time, trip_distance) 
+VALUES (TRIPS_SEQ.nextval, sysdate -8 , 156, 16, 149, 'CARRERA 20', 'CALLE 32', 156, 0, 'FINISHED', 'N', 45.2, 25.2); COMMIT;
+
+INSERT INTO trip_concepts (id, trip_id, concept_name, concept_value, concept_description) 
+VALUES (TRIP_CONCEPTS_SEQ.nextval, 6, 'IMPUESTOS', 2000, NULL); COMMIT;
+INSERT INTO trip_concepts (id, trip_id, concept_name, concept_value, concept_description) 
+VALUES (TRIP_CONCEPTS_SEQ.nextval, 6, 'PROPINA', 5000, NULL); COMMIT;
+INSERT INTO trip_concepts (id, trip_id, concept_name, concept_value, concept_description) 
+VALUES (TRIP_CONCEPTS_SEQ.nextval, 6, 'PEAJE', 8000, NULL); COMMIT;
+-- VIAJE 7
+INSERT INTO trips (id, pickup, user_id, driver_id, city_id, origin_address, destination_address, payment_method, trip_fare, trip_status, dinamic_fare, trip_time, trip_distance) 
+VALUES (TRIPS_SEQ.nextval, sysdate -9 , 128, 37, 1, 'CARRERA 2', 'CALLE 52', 128, 0, 'FINISHED', 'N', 16.2, 6.2); COMMIT;
+
+INSERT INTO trip_concepts (id, trip_id, concept_name, concept_value, concept_description) 
+VALUES (TRIP_CONCEPTS_SEQ.nextval, 7, 'IMPUESTOS', 2000, NULL); COMMIT;
+INSERT INTO trip_concepts (id, trip_id, concept_name, concept_value, concept_description) 
+VALUES (TRIP_CONCEPTS_SEQ.nextval, 7, 'PROPINA', 5000, NULL); COMMIT;
+-- VIAJE 8
+INSERT INTO trips (id, pickup, user_id, driver_id, city_id, origin_address, destination_address, payment_method, trip_fare, trip_status, dinamic_fare, trip_time, trip_distance) 
+VALUES (TRIPS_SEQ.nextval, sysdate -6 , 325, 67, 1004, 'CARRERA 12', 'CALLE 22', 325, 0, 'FINISHED', 'N', 12.2, 3.2); COMMIT;
+-- VIAJE 9
+INSERT INTO trips (id, pickup, user_id, driver_id, city_id, origin_address, destination_address, payment_method, trip_fare, trip_status, dinamic_fare, trip_time, trip_distance) 
+VALUES (TRIPS_SEQ.nextval, sysdate -7 , 387, 17, 830, 'CARRERA 42', 'CALLE 62', 387, 0, 'FINISHED', 'N', 22.3, 10.2); COMMIT;
+
+INSERT INTO trip_concepts (id, trip_id, concept_name, concept_value, concept_description) 
+VALUES (TRIP_CONCEPTS_SEQ.nextval, 9, 'IMPUESTOS', 4000, NULL); COMMIT;
+INSERT INTO trip_concepts (id, trip_id, concept_name, concept_value, concept_description) 
+VALUES (TRIP_CONCEPTS_SEQ.nextval, 9, 'PROPINA', 6000, NULL); COMMIT;
+-- VIAJE 10
+INSERT INTO trips (id, pickup, user_id, driver_id, city_id, origin_address, destination_address, payment_method, trip_fare, trip_status, dinamic_fare, trip_time, trip_distance) 
+VALUES (TRIPS_SEQ.nextval, sysdate -2 , 228, 68, 126, 'CARRERA 2', 'CALLE 6', 228, 0, 'FINISHED', 'N', 14.3, 9.2); COMMIT;
+
+INSERT INTO trip_concepts (id, trip_id, concept_name, concept_value, concept_description) 
+VALUES (TRIP_CONCEPTS_SEQ.nextval, 10, 'IMPUESTOS', 3000, NULL); COMMIT;
+INSERT INTO trip_concepts (id, trip_id, concept_name, concept_value, concept_description) 
+VALUES (TRIP_CONCEPTS_SEQ.nextval, 10, 'PROPINA', 3000, NULL); COMMIT;
+-- VIAJE 11
+INSERT INTO trips (id, pickup, user_id, driver_id, city_id, origin_address, destination_address, payment_method, trip_fare, trip_status, dinamic_fare, trip_time, trip_distance) 
+VALUES (TRIPS_SEQ.nextval, sysdate, 470, 32, 1, 'CALLE 10', 'CARRERA 35', 470, 0, 'ACTIVE', 'N', 0, 0); COMMIT;
