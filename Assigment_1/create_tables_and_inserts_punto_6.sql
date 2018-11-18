@@ -165,6 +165,7 @@ CREATE TABLE trips
   payment_method INT NOT NULL,
   trip_fare NUMBER(16,6) DEFAULT 0 NOT NULL,  
   trip_status VARCHAR2(20 CHAR) DEFAULT 'ACTVE' NOT NULL, -- ACTIVE, FINISHED, CANCELED  
+  dinamic_fare VARCHAR2(1 CHAR) DEFAULT 'N' NOT NULL,
   CONSTRAINT trips_pk PRIMARY KEY (id),
   CONSTRAINT fk_tr_user_id FOREIGN KEY (user_id) REFERENCES users(id),
   CONSTRAINT fk_tr_driver_id FOREIGN KEY (driver_id) REFERENCES driver_vehichles(id),
