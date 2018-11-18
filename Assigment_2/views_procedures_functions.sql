@@ -128,12 +128,12 @@ PROCEDURE calcular_tarifa (
     valor_distancia   NUMBER := 0;
     valor_tarifa      NUMBER := 0;
 BEGIN
-    SELECT DISTINCT
+    	SELECT DISTINCT
         t.trip_status,
         c.value_base_rate,
         t.trip_time,
         t.trip_distance,
-        SUM(tc.concept_value) OVER(PARTITION BY tc.trip_id),
+        COALESCE(SUM(tc.concept_value) OVER(PARTITION BY tc.trip_id), NULL, 0),
         c.name
     INTO
         estado_viaje,
@@ -144,11 +144,11 @@ BEGIN
         ciudad_viaje
     FROM
         trips t
-        INNER JOIN cities c ON c.id = t.city_id
-        INNER JOIN trip_concepts tc ON tc.trip_id = t.id
+        INNER JOIN cities c ON t.city_id = c.id
+        LEFT JOIN trip_concepts tc ON t.id = tc.trip_id 
     WHERE
         t.id = p_id_viaje;
-
+        
     IF ( upper(estado_viaje) = upper('FINISHED') ) THEN -- Si el estafo de viaje es FINISHED procede a actualizar el valor de la tarifa
         valor_tarifa := 0;
         valor_tiempo := assigment_2.time_value(tiempo_viaje,ciudad_viaje);
