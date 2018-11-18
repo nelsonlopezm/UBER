@@ -25,7 +25,7 @@ SELECT
     c.name             ciudad_viaje
 FROM
     trips t INNER JOIN users u ON t.user_id = u.id
-    INNER JOIN cities c ON AND t.city_id = c.id;
+    INNER JOIN cities c ON  t.city_id = c.id
     INNER JOIN driver_vehichles dv ON t.driver_id = dv.id
     INNER JOIN vehichles v ON dv.vehichle_id = v.id;
 
