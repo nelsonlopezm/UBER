@@ -3223,6 +3223,7 @@ insert into USER_EMAILS (ID, USER_ID, EMAIL, USER_PAYMENT_METHOD_ID) values (use
 insert into USER_EMAILS (ID, USER_ID, EMAIL, USER_PAYMENT_METHOD_ID) values (user_emails_seq.NEXTVAL,	500	,	 'chrisse.dawnay@correo.com', 500);
 COMMIT;
 
+-- SE ACTUALIZAN LAS TARIFAS DE LAS CIUDADES (EN ESTE CASO LAS CIUDADES DEL MISMO DEPARTAMENTO TIENEN LA MISMA TARIFA)
 UPDATE cities SET value_per_kilometer =	764.525994	, value_per_minute =	178.571429	, value_base_rate =	2500	WHERE state_id IN (SELECT id FROM states WHERE name = 'ANTIOQUIA');
 UPDATE cities SET value_per_kilometer =	523.93465	, value_per_minute =	175.5285	, value_base_rate =	2300	WHERE state_id IN (SELECT id FROM states WHERE name = 'ATLANTICO');
 UPDATE cities SET value_per_kilometer =	770.926074	, value_per_minute =	184.971685	, value_base_rate =	2550	WHERE state_id IN (SELECT id FROM states WHERE name = 'BOGOTA');
@@ -3258,3 +3259,22 @@ UPDATE cities SET value_per_kilometer =	768.126039	, value_per_minute =	182.1715
 UPDATE cities SET value_per_kilometer =	768.526044	, value_per_minute =	182.571589	, value_base_rate =	2200	WHERE state_id IN (SELECT id FROM states WHERE name = 'VICHADA');
 COMMIT; 
 
+-- ACTUALIZAR LAS CIUDADES DE LOS CLIENTES
+UPDATE users SET location = 1 WHERE ROWNUM <= 70 AND user_type = 'CUSTOMER'; COMMIT;
+UPDATE users SET location = 149 WHERE ROWNUM <= 70 AND location NOT IN(1) AND user_type = 'CUSTOMER'; COMMIT;
+UPDATE users SET location = 1004 WHERE ROWNUM <= 70 AND location NOT IN(1,149) AND user_type = 'CUSTOMER'; COMMIT;
+UPDATE users SET location = 150 WHERE ROWNUM <= 70 AND location NOT IN(1,149, 1004) AND user_type = 'CUSTOMER'; COMMIT;
+UPDATE users SET location = 830 WHERE ROWNUM <= 70 AND location NOT IN(1,149, 1004, 150) AND user_type = 'CUSTOMER'; COMMIT;
+UPDATE users SET location = 126 WHERE ROWNUM <= 70 AND location NOT IN(1,149, 1004, 150, 830) AND user_type = 'CUSTOMER'; COMMIT;
+UPDATE users SET location = 319 WHERE ROWNUM <= 70 AND location NOT IN(1,149, 1004, 150, 830, 126) AND user_type = 'CUSTOMER'; COMMIT;
+UPDATE users SET location = 19 WHERE ROWNUM <= 70 AND location NOT IN(1,149, 1004, 150, 830, 126, 319) AND user_type = 'CUSTOMER'; COMMIT;
+
+-- ACTUALIZAR LAS CIUDADES DE LOS CONDUCTORES
+UPDATE users SET location = 1 WHERE ROWNUM <= 14 AND user_type = 'DRIVER'; COMMIT;
+UPDATE users SET location = 149 WHERE ROWNUM <= 14 AND location NOT IN(1) AND user_type = 'DRIVER'; COMMIT;
+UPDATE users SET location = 1004 WHERE ROWNUM <= 14 AND location NOT IN(1,149) AND user_type = 'DRIVER'; COMMIT;
+UPDATE users SET location = 150 WHERE ROWNUM <= 14 AND location NOT IN(1,149, 1004) AND user_type = 'DRIVER'; COMMIT;
+UPDATE users SET location = 830 WHERE ROWNUM <= 14 AND location NOT IN(1,149, 1004, 150) AND user_type = 'DRIVER'; COMMIT;
+UPDATE users SET location = 126 WHERE ROWNUM <= 14 AND location NOT IN(1,149, 1004, 150, 830) AND user_type = 'DRIVER'; COMMIT;
+UPDATE users SET location = 319 WHERE ROWNUM <= 14 AND location NOT IN(1,149, 1004, 150, 830, 126) AND user_type = 'DRIVER'; COMMIT;
+UPDATE users SET location = 19 WHERE ROWNUM <= 14 AND location NOT IN(1,149, 1004, 150, 830, 126, 319) AND user_type = 'DRIVER'; COMMIT;
