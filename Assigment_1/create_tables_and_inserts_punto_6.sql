@@ -3285,6 +3285,7 @@ UPDATE users SET location = 19 WHERE ROWNUM <= 14 AND location NOT IN(1,149, 100
 
 
 -- INSERTAR VIAJES Y CONCEPTOS
+-- VIAJE 1
 INSERT INTO trips (id, pickup, user_id, driver_id, city_id, origin_address, destination_address, payment_method, trip_fare, trip_status, dinamic_fare, trip_time, trip_distance) 
 VALUES (TRIPS_SEQ.nextval, sysdate, 1, 20, 1, 'CALLE 50', 'CARRERA 42', 1, 0, 'FINISHED', 'N', 8.50, 2.66); COMMIT;
 
@@ -3292,3 +3293,13 @@ INSERT INTO trip_concepts (id, trip_id, concept_name, concept_value, concept_des
 VALUES (TRIP_CONCEPTS_SEQ.nextval, 1, 'RECARGO NOCTURNO', 5000, NULL); COMMIT;
 INSERT INTO trip_concepts (id, trip_id, concept_name, concept_value, concept_description) 
 VALUES (TRIP_CONCEPTS_SEQ.nextval, 1, 'PROPINA', 3000, NULL); COMMIT;
+-- VIAJE 2
+INSERT INTO trips (id, pickup, user_id, driver_id, city_id, origin_address, destination_address, payment_method, trip_fare, trip_status, dinamic_fare, trip_time, trip_distance) 
+VALUES (TRIPS_SEQ.nextval, sysdate -10 , 247, 82, 149, 'CARRERA 90', 'CALLE 26', 247, 0, 'FINISHED', 'N', 30, 10.5); COMMIT;
+
+INSERT INTO trip_concepts (id, trip_id, concept_name, concept_value, concept_description) 
+VALUES (TRIP_CONCEPTS_SEQ.nextval, 2, 'IMPUESTOS', 2000, NULL); COMMIT;
+INSERT INTO trip_concepts (id, trip_id, concept_name, concept_value, concept_description) 
+VALUES (TRIP_CONCEPTS_SEQ.nextval, 2, 'PROPINA', 5000, NULL); COMMIT;
+INSERT INTO trip_concepts (id, trip_id, concept_name, concept_value, concept_description) 
+VALUES (TRIP_CONCEPTS_SEQ.nextval, 2, 'PEAJE', 4000, NULL); COMMIT;
